@@ -1,6 +1,6 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="./static", static_url_path='/static')
 app.debug = True
 
 users = {
@@ -21,16 +21,17 @@ def viewBudgets():
 def updateBudget():
 
     if request.method == 'POST':
-        print(request.json)
-        # user=request.json['user']
-        # amount=request.json['amount']
-        #
-        # if user in users:
-        #     users[user] += float(amount)
-        #
-        # print(user, amount)
+        print(request.form)
+        user=request.form['user']
+        amount=request.form['amount']
 
-    return "success"
+        if user in users:
+            users[user] += float(amount)
+
+        print(user, amount)
+
+    return render_template("form.html")
+
 
 
 
